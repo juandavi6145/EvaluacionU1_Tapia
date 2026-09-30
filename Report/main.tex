@@ -1,0 +1,56 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\usepackage{hyperref}
+
+% --- Datos del Documento ---
+\title{Nota Técnica: Análisis de Deflexión en Viga Simplemente Apoyada}
+\author{Juan David Tapia Cerrudo \\ \textit{Ingeniería Civil en Obras Civiles, Universidad de Santiago de Chile}}
+\date{\05 de octubre de 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+El presente documento documenta el análisis de una viga simplemente apoyada sometida a una carga puntual en el centro de su luz. El objetivo es comparar un conjunto de datos experimentales de carga-deflexión con las predicciones teóricas de la teoría de vigas de Euler-Bernoulli, estableciendo un flujo de trabajo reproducible.
+
+\section{Metodología y Parámetros Teóricos}
+Para el cálculo teórico, se utilizó la ecuación de deflexión máxima de Euler-Bernoulli para una viga simplemente apoyada:
+\begin{equation}
+    \delta = \frac{P L^3}{48 E I}
+\end{equation}
+
+Los parámetros geométricos y del material utilizados fueron: longitud $L = 4.0$ m, sección rectangular con base $b = 0.2$ m y altura $h = 0.4$ m, y un módulo de elasticidad $E = 25$ GPa \cite{hibbeler2017}. 
+
+Se documentó la conversión de unidades explícitamente en el script de análisis (pasando $E$ a $25 \times 10^6$ kPa) para mantener consistencia con la carga $P$ aplicada en kN y obtener la deflexión teórica en metros, la cual luego se convirtió a milímetros. El segundo momento de área calculado es $I = 1.067 \times 10^{-3} \text{ m}^4$.
+
+\section{Resultados y Comparación}
+En la Figura \ref{fig:curva}, se presenta la comparación entre los datos medidos y la predicción teórica. 
+
+\begin{figure}[h!]
+    \centering
+    % Asegúrate de que la ruta coincida con donde subiste tu imagen en Overleaf
+    \includegraphics[width=0.75\textwidth]{carga_deflexion.png}
+    \caption{Curva Carga vs. Deflexión en el centro de la luz.}
+    \label{fig:curva}
+\end{figure}
+
+Al evaluar las cargas distintas de cero, se obtuvo una diferencia relativa porcentual promedio de aproximadamente $1.88\%$ entre la deflexión medida y la teórica. Las desviaciones son mínimas, indicando un excelente ajuste del modelo en este rango de cargas.
+
+\subsection{Verificación Adicional}
+Como método de verificación independiente, se analizó la relación $\delta/P$ para los datos medidos. En el rango elástico lineal, esta proporción debe mantenerse constante. El cálculo arrojó un valor promedio de $0.051$ mm/kN a lo largo de todas las mediciones, con variaciones insignificantes. Esto confirma el comportamiento lineal elástico del sistema y valida que no existen errores gruesos en el set de datos.
+
+\section{Limitaciones y Conclusiones}
+Si bien el modelo teórico presenta un alto nivel de concordancia con la evidencia medida, una \textbf{limitación} de la teoría de Euler-Bernoulli es que ignora las deformaciones por corte (las cuales sí considera la teoría de Timoshenko) y asume apoyos matemáticamente perfectos sin asentamientos ni fricción. En situaciones reales, o con vigas de menor esbeltez, estas simplificaciones podrían aumentar la divergencia entre los datos y la teoría.
+
+En conclusión, los datos proporcionados exhiben un comportamiento claramente lineal elástico, y la teoría clásica de vigas es suficientemente precisa para predecir la deflexión bajo los parámetros geométricos estudiados.
+
+\bibliographystyle{plain}
+\bibliography{referencias}
+
+\end{document}
